@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
 import fileStructure from "./Data/fileStructure";
 import Sidebar from "./Components/Sidebar";
 import Home from "./Pages/Home";
@@ -10,17 +11,34 @@ import TopBar from "./Components/TopBar";
 import BottomBar from "./Components/BottomBar";
 
 function App() {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <Router>
+      <div className="noise" />
+      <div className="gradient-bg" />
+      <div
+        className="custom-cursor"
+        style={{
+          transform: `translate(${mousePos.x - 8}px, ${mousePos.y - 8}px)`,
+        }}
+      />
       <Sidebar structure={fileStructure} />
       <div className="ml-64 h-screen overflow-hidden flex flex-col">
-        {/* Top Bar */}
         <div className="sticky top-0 z-50 bg-[#1e1e1e] border-b border-gray-700">
           <TopBar />
         </div>
 
-        {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto p-4 animate-fade-in">
           <Routes>
             <Route path="/Home" element={<Home />} />
             <Route path="/about" element={<About />} />
@@ -30,7 +48,6 @@ function App() {
           </Routes>
         </div>
 
-        {/* Bottom Bar */}
         <div className="sticky bottom-0 z-50">
           <BottomBar />
         </div>

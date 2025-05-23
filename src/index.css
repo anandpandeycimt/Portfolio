@@ -2,9 +2,87 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply font-mono;
-  background-color: #040714;
-  color: #fff;
+@layer base {
+  body {
+    @apply font-mono;
+    background-color: #0a0f1c;
+    color: #fff;
+    cursor: default;
+  }
 }
 
+/* Custom Cursor */
+.custom-cursor {
+  @apply fixed w-4 h-4 rounded-full pointer-events-none z-50 mix-blend-difference;
+  background: #00ffcc;
+  transition: transform 0.2s ease;
+}
+
+/* Noise Overlay */
+.noise {
+  @apply fixed inset-0 z-10 pointer-events-none opacity-[0.015];
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Glow Effects */
+.glow {
+  @apply relative;
+}
+
+.glow::after {
+  @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+  content: '';
+  box-shadow: 0 0 15px #00ffcc40;
+}
+
+.glow:hover::after {
+  @apply opacity-100;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-typing {
+  @apply overflow-hidden whitespace-nowrap;
+  animation: typing 2s steps(40, end);
+}
+
+/* Gradient Background */
+.gradient-bg {
+  @apply absolute inset-0 -z-10;
+  background: radial-gradient(circle at 50% 50%, #0f172a 0%, #0a0f1c 100%);
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Scroll Behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
