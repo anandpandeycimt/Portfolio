@@ -7,15 +7,7 @@
     @apply font-mono;
     background-color: #0a0f1c;
     color: #fff;
-    cursor: default;
   }
-}
-
-/* Custom Cursor */
-.custom-cursor {
-  @apply fixed w-4 h-4 rounded-full pointer-events-none z-50 mix-blend-difference;
-  background: #00ffcc;
-  transition: transform 0.2s ease;
 }
 
 /* Noise Overlay */
