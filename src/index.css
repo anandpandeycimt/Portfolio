@@ -7,6 +7,18 @@
     @apply font-mono;
     background-color: #0a0f1c;
     color: #fff;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Improve touch targets */
+  button, a {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Focus styles */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-[#00ffcc];
   }
 }
 
@@ -77,4 +89,24 @@ html {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+  .glow::after {
+    @apply hidden;
+  }
+  
+  .hover\:scale-[1.02]:hover {
+    transform: none;
+  }
+}
+
+/* Monaco Editor Customizations */
+.monaco-editor {
+  padding-top: 8px;
+}
+
+.monaco-editor .margin {
+  background-color: #1e1e1e !important;
 }
